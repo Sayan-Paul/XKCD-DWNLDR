@@ -2,7 +2,7 @@
 #To download and store the pic in current directory
 import urllib
 
-def download_photo(self, img_url, filename):
-    filename=img_url+"_"+filename
-    img_url="http://xkcd.com/"+img_url
+def download_photo( img_url, filename):
+    filename+="_"+img_url
+    img_url="http://imgs.xkcd.com/comics/"+img_url+".png"
     urllib.urlretrieve(img_url, filename)
