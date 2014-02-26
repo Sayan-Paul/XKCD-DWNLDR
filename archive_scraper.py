@@ -50,4 +50,4 @@ for i in range(int(latest_update)):
 	
 
 #download_photo("second",latest_update)
-print Comics
+#print Comics
