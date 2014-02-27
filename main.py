@@ -40,6 +40,14 @@ class XKCDWindow(Gtk.Window):
         self.label2.set_text("Download Comics")
         self.label2.set_justify(Gtk.Justification.CENTER)
 
+        self.label3 = Gtk.Label()
+        self.label3.set_text("Enter Number or Select :")
+        self.label3.set_justify(Gtk.Justification.CENTER)
+
+        self.label4 = Gtk.Label()
+        self.label4.set_text("Enter Number or Select :")
+        self.label4.set_justify(Gtk.Justification.CENTER)
+
         self.list1 = Gtk.ComboBoxText()
         self.list1.set_entry_text_column(0)
         self.list1.connect("changed", self.on_view_combo_changed)
@@ -47,7 +55,7 @@ class XKCDWindow(Gtk.Window):
         self.list2 = Gtk.ComboBoxText()
         self.list2.set_entry_text_column(0)
         self.list2.connect("changed", self.on_dwnld_combo_changed)
-        
+
         for comic in archive_scraper.Comics:
             self.list1.append_text(str(comic)+" - "+archive_scraper.Comics[comic])
             self.list2.append_text(str(comic)+" - "+archive_scraper.Comics[comic])
@@ -60,6 +68,7 @@ class XKCDWindow(Gtk.Window):
         #packing first box
         self.vbox1.pack_start(self.label1, False, True, 0)
         self.vbox1.pack_start(self.vw_rndm, False, True, 0)
+        self.vbox1.pack_start(self.label3, False, True, 0)
         self.vbox1.pack_start(self.entry1, False, True, 0)
         self.vbox1.pack_start(self.list1, False, True, 0)
         self.vbox1.pack_start(self.view, False, True, 0)
@@ -67,10 +76,11 @@ class XKCDWindow(Gtk.Window):
         #packing second box
         self.vbox2.pack_start(self.label2, False, True, 0)
 
-        self.hbox2.pack_start(self.sup_me, False, True, 0)
-        self.hbox2.pack_start(self.dwn_all, False, True, 0)
+        self.hbox2.pack_start(self.sup_me, True, True, 0)
+        self.hbox2.pack_start(self.dwn_all, True, True, 0)
         
         self.vbox2.pack_start(self.hbox2, False, True, 0)
+        self.vbox2.pack_start(self.label4, False, True, 0)
         self.vbox2.pack_start(self.entry2, False, True, 0)
         self.vbox2.pack_start(self.list2, False, True, 0)
         self.vbox2.pack_start(self.dwn, False, True, 0)

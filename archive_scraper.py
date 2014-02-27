@@ -1,7 +1,7 @@
 #!/bin/usr/python
 # Archive scraper
 
-import urllib
+import urllib,pickle
 
 Comics=dict()
 
