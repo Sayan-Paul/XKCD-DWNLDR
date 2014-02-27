@@ -41,24 +41,30 @@ class XKCDWindow(Gtk.Window):
         self.label2.set_justify(Gtk.Justification.CENTER)
 
         self.label3 = Gtk.Label()
-        self.label3.set_text("Enter Number or Select :")
+        self.label3.set_text("Enter Number to Select :")
         self.label3.set_justify(Gtk.Justification.CENTER)
 
         self.label4 = Gtk.Label()
-        self.label4.set_text("Enter Number or Select :")
+        self.label4.set_text("Enter Number to Select :")
         self.label4.set_justify(Gtk.Justification.CENTER)
 
-        self.list1 = Gtk.ComboBoxText()
-        self.list1.set_entry_text_column(0)
-        self.list1.connect("changed", self.on_view_combo_changed)
+        self.scrolledwindow1 = Gtk.ScrolledWindow()
+        self.scrolledwindow1.set_hexpand(True)
+        self.scrolledwindow1.set_vexpand(True)
+        self.textview1 = Gtk.TextView()
+        self.textbuffer1 = self.textview1.get_buffer()
+        self.textbuffer1.set_text("\n".join([str(x)+" - "+archive_scraper.Comics[x] for x in archive_scraper.Comics]))
+        self.textview1.set_editable(False)
+        self.scrolledwindow1.add(self.textview1)
 
-        self.list2 = Gtk.ComboBoxText()
-        self.list2.set_entry_text_column(0)
-        self.list2.connect("changed", self.on_dwnld_combo_changed)
-
-        for comic in archive_scraper.Comics:
-            self.list1.append_text(str(comic)+" - "+archive_scraper.Comics[comic])
-            self.list2.append_text(str(comic)+" - "+archive_scraper.Comics[comic])
+        self.scrolledwindow2 = Gtk.ScrolledWindow()
+        self.scrolledwindow2.set_hexpand(True)
+        self.scrolledwindow2.set_vexpand(True)
+        self.textview2 = Gtk.TextView()
+        self.textbuffer2 = self.textview2.get_buffer()
+        self.textbuffer2.set_text("\n".join([str(x)+" - "+archive_scraper.Comics[x] for x in archive_scraper.Comics]))
+        self.textview2.set_editable(False)
+        self.scrolledwindow2.add(self.textview2)
 
 
         self.sup_me = Gtk.Button(label="Surprise Me")
@@ -70,7 +76,7 @@ class XKCDWindow(Gtk.Window):
         self.vbox1.pack_start(self.vw_rndm, False, True, 0)
         self.vbox1.pack_start(self.label3, False, True, 0)
         self.vbox1.pack_start(self.entry1, False, True, 0)
-        self.vbox1.pack_start(self.list1, False, True, 0)
+        self.vbox1.pack_start(self.scrolledwindow1, False, True, 0)
         self.vbox1.pack_start(self.view, False, True, 0)
 
         #packing second box
@@ -82,7 +88,7 @@ class XKCDWindow(Gtk.Window):
         self.vbox2.pack_start(self.hbox2, False, True, 0)
         self.vbox2.pack_start(self.label4, False, True, 0)
         self.vbox2.pack_start(self.entry2, False, True, 0)
-        self.vbox2.pack_start(self.list2, False, True, 0)
+        self.vbox2.pack_start(self.scrolledwindow2, False, True, 0)
         self.vbox2.pack_start(self.dwn, False, True, 0)
 
 
