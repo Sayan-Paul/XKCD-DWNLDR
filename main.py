@@ -8,10 +8,9 @@ import archive_scraper
 class View_Image(Gtk.Dialog):
 
     def __init__(self, parent,title,image):
-        Gtk.Dialog.__init__(self, title, parent, 0,
-            (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+        Gtk.Dialog.__init__(self, title, parent, 0,(Gtk.STOCK_OK, Gtk.ResponseType.OK))
 
-        self.set_default_size(150, 100)
+        self.set_default_size(500, 500)
 
         image = Gtk.Image.new_from_file (image)
 
@@ -113,26 +112,15 @@ class XKCDWindow(Gtk.Window):
         self.vbox2.pack_start(self.scrolledwindow2, False, True, 0)
         self.vbox2.pack_start(self.dwn, False, True, 0)
 
-
-        self.view.connect("clicked", self.on_button1_clicked)
+        self.view.connect("clicked", self.on_view_clicked)
 
         self.image = Gtk.Image.new_from_file ("xkcd.png")
         self.vbox.pack_start(self.image, False, True, 0)
 
-    def on_button1_clicked(self, widget):
+    def on_view_clicked(self, widget):
         vw_im=View_Image(self,"title","xkcd.png")
         vw_im.run()
         vw_im.destroy()
-
-    def on_view_combo_changed(self, combo):
-        text = combo.get_active_text()
-        if text != None:
-            print("Selected: %s" % text)
-
-    def on_dwnld_combo_changed(self, combo):
-        text = combo.get_active_text()
-        if text != None:
-            print("Selected: %s" % text)
 
 
 archive_scraper.scrape()
