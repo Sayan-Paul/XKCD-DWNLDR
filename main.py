@@ -5,15 +5,35 @@ from gi.repository import Gtk
 import img_downloader
 import archive_scraper
 
+class View_Image(Gtk.Dialog):
+
+    def __init__(self, parent,title,image):
+        Gtk.Dialog.__init__(self, title, parent, 0,
+            (Gtk.STOCK_OK, Gtk.ResponseType.OK))
+
+        self.set_default_size(150, 100)
+
+        image = Gtk.Image.new_from_file (image)
+
+        box = self.get_content_area()
+        box.add(image)
+        self.show_all()
+
 class XKCDWindow(Gtk.Window):
 
     def __init__(self):
-        Gtk.Window.__init__(self, title="**Xkcd Downloader**")
-        self.set_size_request(600, 600)
+        Gtk.Window.__init__(self, title=" * * Xkcd Downloader * * ")
+        self.set_size_request(600, 660)
         self.set_border_width(10)
 
         self.vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,spacing=2)
         self.add(self.vbox)
+
+
+        self.label_t = Gtk.Label()
+        self.label_t.set_text("- * - XKCD Comics - * -")
+        self.label_t.set_justify(Gtk.Justification.CENTER)
+        self.vbox.pack_start(self.label_t, False, True, 0)
 
         self.hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,spacing=10)
         self.vbox.pack_start(self.hbox, False, True, 0)
@@ -30,7 +50,9 @@ class XKCDWindow(Gtk.Window):
         self.view = Gtk.Button(label="View")
 
         self.entry1 = Gtk.Entry()
+        self.entry1.set_placeholder_text ("Enter valid Comic Number")
         self.entry2 = Gtk.Entry()
+        self.entry2.set_placeholder_text ("Enter valid Comic Number")
 
         self.label1 = Gtk.Label()
         self.label1.set_text("View Comics")
@@ -92,13 +114,15 @@ class XKCDWindow(Gtk.Window):
         self.vbox2.pack_start(self.dwn, False, True, 0)
 
 
-        # self.button1.connect("clicked", self.on_button1_clicked)
+        self.view.connect("clicked", self.on_button1_clicked)
 
-        image = Gtk.Image.new_from_file ("xkcd.png")
-        self.vbox.pack_start(image, False, True, 0)
+        self.image = Gtk.Image.new_from_file ("xkcd.png")
+        self.vbox.pack_start(self.image, False, True, 0)
 
     def on_button1_clicked(self, widget):
-        print("Hello")
+        vw_im=View_Image(self,"title","xkcd.png")
+        vw_im.run()
+        vw_im.destroy()
 
     def on_view_combo_changed(self, combo):
         text = combo.get_active_text()
