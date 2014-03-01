@@ -1,7 +1,7 @@
 #!/bin/usr/python
 # Archive scraper
 
-import urllib,pickle
+import urllib,csv
 
 Comics=dict()
 
@@ -29,10 +29,20 @@ def scrape():
 	#print page[com_nm_st+1:com_nm_end]
 	com_nm=page[com_nm_st+1:com_nm_end]
 
+	for key, val in csv.reader(open("Comics.csv")):
+	    Comics[key] = val
+
+	if len(Comics)==0:
+		m=0
+	elif max(Comics.keys()):
+		m=int(latest_update)
+	else:
+		m=max(Comics.keys())
 	#Comics directory entry
 	Comics[int(latest_update)]=com_nm
+	print m,Comics
 
-	for i in range(int(latest_update)):
+	for i in range(m,int(latest_update)):
 		start=com_nm_end+1
 		first=page.find("<a href=",start)
 		end=page.find("/",first+10)
@@ -50,7 +60,11 @@ def scrape():
 		#Comics directory entry
 		try:
 			Comics[int(com_nmbr)]=com_nm
-		except Exception, e:
+		except Exception as e:
 			break
 
-	#print Comics
+	w = csv.writer(open("Comics.csv", "w"))
+	for key, val in Comics.items():
+	    w.writerow([key, val])
+
+# scrape()

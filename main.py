@@ -22,17 +22,15 @@ class XKCDWindow(Gtk.Window):
 
     def __init__(self):
         Gtk.Window.__init__(self, title=" * * Xkcd Downloader * * ")
-        self.set_size_request(600, 660)
+        self.set_size_request(1000, 700)
         self.set_border_width(10)
 
         self.vbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL,spacing=2)
         self.add(self.vbox)
 
 
-        self.label_t = Gtk.Label()
-        self.label_t.set_text("- * - XKCD Comics - * -")
-        self.label_t.set_justify(Gtk.Justification.CENTER)
-        self.vbox.pack_start(self.label_t, False, True, 0)
+        self.logo=Gtk.Image.new_from_file ("xkcdLogo.png")
+        self.vbox.pack_start(self.logo, False, True, 0)
 
         self.hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,spacing=10)
         self.vbox.pack_start(self.hbox, False, True, 0)
