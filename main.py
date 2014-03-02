@@ -72,7 +72,11 @@ class XKCDWindow(Gtk.Window):
         self.scrolledwindow1.set_vexpand(True)
         self.textview1 = Gtk.TextView()
         self.textbuffer1 = self.textview1.get_buffer()
-        self.textbuffer1.set_text("\n".join([str(x)+" - "+archive_scraper.Comics[x] for x in archive_scraper.Comics]))
+        s=""
+        for i in archive_scraper.Comics:
+            if archive_scraper.downloaded[i]:
+                s+=str(i)+" - "+archive_scraper.Comics[i]+"\n"
+        self.textbuffer1.set_text(s)
         self.textview1.set_editable(False)
         self.scrolledwindow1.add(self.textview1)
 
@@ -81,7 +85,11 @@ class XKCDWindow(Gtk.Window):
         self.scrolledwindow2.set_vexpand(True)
         self.textview2 = Gtk.TextView()
         self.textbuffer2 = self.textview2.get_buffer()
-        self.textbuffer2.set_text("\n".join([str(x)+" - "+archive_scraper.Comics[x] for x in archive_scraper.Comics]))
+        s=""
+        for i in archive_scraper.Comics:
+            if archive_scraper.not_downloaded[i]:
+                s+=str(i)+" - "+archive_scraper.Comics[i]+"\n"
+        self.textbuffer2.set_text(s)
         self.textview2.set_editable(False)
         self.scrolledwindow2.add(self.textview2)
 

@@ -3,12 +3,14 @@
 
 import urllib,csv
 
-Comics=dict()
+Comics = dict()
+downloaded = dict()
+not_downloaded = dict()
 
 def scrape():
 	"""Scrape the archive page for the list of comics"""
 
-	global Comics
+	global Comics,downloaded,not_downloaded
 
 	arc=urllib.urlopen("http://xkcd.com/archive/")
 	page=" ".join(arc.readlines())
@@ -29,8 +31,17 @@ def scrape():
 	#print page[com_nm_st+1:com_nm_end]
 	com_nm=page[com_nm_st+1:com_nm_end]
 
-	for key, val in csv.reader(open("Comics.csv")):
-	    Comics[key] = val
+	dwn_num=map(int,open("downloaded_list.txt","r").readlines())
+
+	for i in range(1,int(latest_update)+1):
+		downloaded[i]=0
+		not_downloaded[i]=0
+	for i in dwn_num:
+		downloaded[i]=1
+	for i in downloaded:
+		not_downloaded[i]=(downloaded[i]+1)%2
+
+	#print downloaded
 
 	if len(Comics)==0:
 		m=0
@@ -40,7 +51,6 @@ def scrape():
 		m=max(Comics.keys())
 	#Comics directory entry
 	Comics[int(latest_update)]=com_nm
-	print m,Comics
 
 	for i in range(m,int(latest_update)):
 		start=com_nm_end+1
@@ -61,10 +71,11 @@ def scrape():
 		try:
 			Comics[int(com_nmbr)]=com_nm
 		except Exception as e:
+			print com_nmbr,
 			break
-
+	print "----"
 	w = csv.writer(open("Comics.csv", "w"))
 	for key, val in Comics.items():
 	    w.writerow([key, val])
 
-# scrape()
+#scrape()
