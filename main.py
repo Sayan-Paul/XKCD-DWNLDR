@@ -4,6 +4,7 @@ from gi.repository import Gtk
 
 import img_downloader
 import archive_scraper
+import random
 
 class View_Image(Gtk.Dialog):
 
@@ -119,6 +120,8 @@ class XKCDWindow(Gtk.Window):
         self.vbox2.pack_start(self.dwn, False, True, 0)
 
         self.view.connect("clicked", self.on_view_clicked)
+        self.sup_me.connect("clicked", self.on_sup_me_clicked)
+        self.vw_rndm.connect("clicked", self.on_vw_rndm_clicked)
 
         self.image = Gtk.Image.new_from_file ("xkcd.png")
         self.vbox.pack_start(self.image, False, True, 0)
@@ -128,6 +131,19 @@ class XKCDWindow(Gtk.Window):
         vw_im.run()
         vw_im.destroy()
 
+    def on_sup_me_clicked(self, widget):
+        notdwnlist=[]
+        for i in archive_scraper.not_downloaded:
+            if archive_scraper.not_downloaded[i]:
+                notdwnlist+=[i]
+        self.entry2.set_text(str(random.choice(notdwnlist)))
+
+    def on_vw_rndm_clicked(self, widget):
+        dwnlist=[]
+        for i in archive_scraper.downloaded:
+            if archive_scraper.downloaded[i]:
+                dwnlist+=[i]
+        self.entry1.set_text(str(random.choice(dwnlist)))
 
 archive_scraper.scrape()
 win = XKCDWindow()
