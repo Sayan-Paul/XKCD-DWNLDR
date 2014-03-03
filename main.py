@@ -10,13 +10,16 @@ class View_Image(Gtk.Dialog):
 
     def __init__(self, parent,title,image):
         Gtk.Dialog.__init__(self, title, parent, 0,(Gtk.STOCK_OK, Gtk.ResponseType.OK))
-
-        self.set_default_size(500, 500)
-
+        # self.set_size_request(500, 700)
         image = Gtk.Image.new_from_file (image)
-
+        # sc = Gtk.ScrolledWindow()
+        # sc.set_vexpand(True)
         box = self.get_content_area()
+        # sc.add(image)
+        # hbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL,spacing=10)
+        # hbox.pack_start(sc,True,True,0)
         box.add(image)
+        self.set_resizable(True)
         self.show_all()
 
 class XKCDWindow(Gtk.Window):

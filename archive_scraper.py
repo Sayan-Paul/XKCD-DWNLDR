@@ -72,7 +72,7 @@ def scrape():
 		try:
 			Comics[int(com_nmbr)]=com_nm
 		except Exception as e:
-			print com_nmbr,
+			#print com_nmbr,
 			break
 	# print "----"
 	w = csv.writer(open("Comics.csv", "w"))
