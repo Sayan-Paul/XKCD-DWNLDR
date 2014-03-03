@@ -181,6 +181,8 @@ class XKCDWindow(Gtk.Window):
             archive_scraper.not_downloaded[sel]=0
             self.view_fun()
             self.down_fun()
+            open("downloaded_list.txt","a").write(str(sel)+"\n")
+
         except:
             title = "XKCD"
             img = "xkcd.png"

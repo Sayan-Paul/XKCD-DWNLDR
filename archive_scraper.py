@@ -74,7 +74,7 @@ def scrape():
 		except Exception as e:
 			print com_nmbr,
 			break
-	print "----"
+	# print "----"
 	w = csv.writer(open("Comics.csv", "w"))
 	for key, val in Comics.items():
 	    w.writerow([key, val])
