@@ -6,11 +6,12 @@ import urllib,csv
 Comics = dict()
 downloaded = dict()
 not_downloaded = dict()
+latest_update=0
 
 def scrape():
 	"""Scrape the archive page for the list of comics"""
 
-	global Comics,downloaded,not_downloaded
+	global Comics,downloaded,not_downloaded,latest_update
 
 	arc=urllib.urlopen("http://xkcd.com/archive/")
 	page=" ".join(arc.readlines())

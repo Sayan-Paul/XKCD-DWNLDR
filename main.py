@@ -122,12 +122,13 @@ class XKCDWindow(Gtk.Window):
         self.view.connect("clicked", self.on_view_clicked)
         self.sup_me.connect("clicked", self.on_sup_me_clicked)
         self.vw_rndm.connect("clicked", self.on_vw_rndm_clicked)
+        self.dwn.connect("clicked", self.on_dwn_clicked)
 
         self.image = Gtk.Image.new_from_file ("xkcd.png")
         self.vbox.pack_start(self.image, False, True, 0)
 
     def on_view_clicked(self, widget):
-        vw_im=View_Image(self,"title","xkcd.png")
+        vw_im=View_Image(self,"title","XKCD Comics/1046_"+archive_scraper.Comics[1046]+".png")
         vw_im.run()
         vw_im.destroy()
 
@@ -144,6 +145,26 @@ class XKCDWindow(Gtk.Window):
             if archive_scraper.downloaded[i]:
                 dwnlist+=[i]
         self.entry1.set_text(str(random.choice(dwnlist)))
+
+    def on_dwn_clicked(self, widget):
+        sel=self.entry2.get_text()
+        
+        try:
+            sel=int(sel)
+        except:
+            self.entry2.set_text()
+            return
+        if sel>archive_scraper.latest_update:
+            self.entry2.set_text() 
+            return
+        if archive_scraper.not_downloaded[sel]:
+            img_downloader.download_photo(str(sel),archive_scraper.Comics[sel])
+        
+        vw_im=View_Image(self,archive_scraper.Comics[sel],"XKCD Comics/"+str(sel)+"_"+archive_scraper.Comics[sel]+".png")
+        print "XKCD Comics/"+str(sel)+"_"+archive_scraper.Comics[sel]
+        vw_im.run()
+        vw_im.destroy()
+
 
 archive_scraper.scrape()
 win = XKCDWindow()
